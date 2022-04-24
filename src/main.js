@@ -23,3 +23,5 @@ app.config.globalProperties.$alert = Toast
 
 app.mount('#app')
 
+// export default
+export default app

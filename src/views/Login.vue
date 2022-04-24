@@ -80,6 +80,8 @@ export default {
             if (res.data.code === 0) {
               this.$alert.success(res.data.message)
               //登陆成功的话,
+              sessionStorage.setItem('userId',res.data.data.id)
+              sessionStorage.setItem('userToken',res.data.data.userToken)
               setTimeout(()=>{
                 this.$router.push('api/userinfo')
               },1000)
