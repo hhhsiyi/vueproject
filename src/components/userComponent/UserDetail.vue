@@ -19,7 +19,7 @@
           </p>
         </div>
         <div class="f2">
-          <div class="userEditBtn">编辑资料</div>
+          <div class="userEditBtn" @click="this.$router.push('/edit')">编辑资料</div>
         </div>
       </div>
     </div>

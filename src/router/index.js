@@ -33,6 +33,19 @@ const routes = [
             istoken: true
         }
     },
+    {
+        path: '/edit',
+        component: () => import("@/views/Edit"),
+        meta: {
+            //控制是否需要进行token校验操作
+            istoken: true
+        }
+    },
+    {
+        path: 'home',
+        component: ()=>import("@/views/Home"),
+        
+    }
 ]
 
 
@@ -47,11 +60,12 @@ router.beforeEach((to, from, next) => {
     // console.log('to ', to)
     // console.log('from ', from)
     // console.log('next ', next)
+    // if(to.path≡'/user')  进行路由判断
     if ((!sessionStorage.getItem('userToken') || !sessionStorage.getItem('userId')) && to.meta.istoken == true) {
         app.config.globalProperties.$alert.fail("请重新登录")
-        setTimeout(()=>{
+        setTimeout(() => {
             router.push('/login')
-        },1000)
+        }, 1000)
         // Vue.prototype.$msg.fail('请重新登录')
         return
     }

@@ -20,6 +20,7 @@ import Header from "@/components/common/Header";
 import LeftBar from '@/components/LeftBar'
 import Register from "@/views/Register";
 import Login from "@/views/Login";
+// import Edit from "@/views/Edit";
 export default {
   name: 'App',
   components: {
