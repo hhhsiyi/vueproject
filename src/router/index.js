@@ -9,7 +9,7 @@ const routes = [
 
     {
         path: '/',
-        redirect: '/login'
+        redirect: '/home'
     },
     {
         path: '/register',
@@ -42,9 +42,9 @@ const routes = [
         }
     },
     {
-        path: 'home',
+        path: '/home',
         component: ()=>import("@/views/Home"),
-        
+
     }
 ]
 

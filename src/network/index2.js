@@ -15,8 +15,8 @@ const myHttp = axios.create({
     }
 )
 myHttp.interceptors.request.use(config=>{
-    console.log(config);
-    console.log("debug",sessionStorage.getItem('userToken')&&sessionStorage.getItem('userId'));
+    // console.log(config);
+    // console.log("debug",sessionStorage.getItem('userToken')&&sessionStorage.getItem('userId'));
     if (sessionStorage.getItem('userToken')&&sessionStorage.getItem('userId')){
         config.headers.Authorization = sessionStorage.getItem("userToken")
     }
@@ -34,7 +34,7 @@ myHttp.interceptors.response.use(res=>{
         // },1000)
         // console.log(app);
     }
-    console.log(res);
+    // console.log(res);
     return res
 },error => {
     console.log(error);
