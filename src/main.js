@@ -11,6 +11,7 @@ import {Toast} from "vant";
 import myHttp from "@/network/index2.js";
 //挂载到原型上,更好使
 // Vue.prototype.$myHttp = myHttp
+//--van-font-size-md
 //vue3之后原型挂载变了
 const app = createApp(App)
     .use(ElementPlus)

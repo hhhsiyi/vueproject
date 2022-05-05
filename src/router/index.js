@@ -45,6 +45,10 @@ const routes = [
         path: '/home',
         component: ()=>import("@/views/Home"),
 
+    },
+    {
+        path: '/test',
+        component: ()=>import("@/views/Test")
     }
 ]
 

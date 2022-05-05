@@ -50,6 +50,6 @@ body{
   background-color: #f4f4f4;
   font-size: 4vw;
   text-align: center;
-
 }
+
 </style>

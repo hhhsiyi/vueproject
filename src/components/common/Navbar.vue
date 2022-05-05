@@ -10,13 +10,12 @@
             placeholder="请输入搜索关键词"
             input-align="center"
             @search="onSearch"/>
-<!--        <search v-model="searchValue"></search>-->
+        <!--        <search v-model="searchValue"></search>-->
         <!--        <van-icon class="searchIcon" name="search"/>-->
       </p>
     </div>
     <div class="logo">
       <img src="@/assets/logo.png"/>
-
       <p>还有话说221</p>
     </div>
   </div>
@@ -25,13 +24,14 @@
 
 <script>
 import Search from "@/components/common/Search";
+
 export default {
   name: "Navbar",
-  components:{
+  components: {
     Search
   },
-  data(){
-    return{
+  data() {
+    return {
       value: ''
     }
   },
