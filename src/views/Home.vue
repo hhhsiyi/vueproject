@@ -133,6 +133,7 @@ export default {
             }
             // console.log("categoryItem.list ", currentCategory);
             currentCategory.list.push(...res.data.records)
+            console.log(typeof res.data.records[1]);
           })
       currentCategory.pageIndex++
     },
@@ -183,6 +184,7 @@ export default {
   //我是直接在retrun里面加个selectedID,然后监听activeKey() {  this.selectedId = this.category[this.activeKey]._id }
   created() {
     this.getCategory()
+    console.log(this.$route);
   }
 }
 </script>

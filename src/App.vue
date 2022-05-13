@@ -10,7 +10,22 @@
 <!--  <login></login>-->
 <!--  <router-link to="/register" replace>注册</router-link>-->
 <!--  <router-link to="/login" replace>登陆</router-link>-->
-  <router-view></router-view>
+<!--  <router-view v-slot="{ Component }">-->
+<!--    <transition>-->
+<!--      <keep-alive>-->
+<!--        <component :is="Component" />-->
+<!--      </keep-alive>-->
+<!--    </transition>-->
+<!--  </router-view>-->
+  <router-view v-slot="{ Component }">
+    <transition>
+      <keep-alive :include="keepAliveComponents">
+        <component :is="Component" />
+      </keep-alive>
+    </transition>
+  </router-view>
+<!--  现在必须这么写了,但是我并不知道是为什么-->
+<!--<router-view></router-view>-->
 </template>
 
 <script>
@@ -30,6 +45,13 @@ export default {
     LeftBar,
     Register,
     Login
+  },
+  data(){
+    return {
+      keepAliveComponents: [
+          'Home'
+      ]
+    }
   }
 }
 </script>

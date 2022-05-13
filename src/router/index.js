@@ -5,6 +5,8 @@ import app from '@/main.js'
 //安装插件
 // const User = ()=>import('@/components/User')
 // const Default = ()=>import("@/components/HomeDefault")
+import article from "@/views/Article";
+
 const routes = [
 
     {
@@ -30,7 +32,7 @@ const routes = [
         component: () => import("@/views/Userinfo"),
         meta: {
             //控制是否需要进行token校验操作
-            istoken: true
+            needToken: true
         }
     },
     {
@@ -38,17 +40,31 @@ const routes = [
         component: () => import("@/views/Edit"),
         meta: {
             //控制是否需要进行token校验操作
-            istoken: true
+            needToken: true
         }
     },
     {
         path: '/home',
-        component: ()=>import("@/views/Home"),
+        component: () => import("@/views/Home"),
+        meta: {
+            // keepAlive: true
+            //    本来打算对keepAlive属性进行判断,后期发现可以直接在app.vue中指定需要保持的组件, 就删除掉了.
+        }
 
     },
     {
         path: '/test',
-        component: ()=>import("@/views/Test")
+        component: () => import("@/views/Test")
+    },
+    {
+        path: '/test2',
+        component: () => import("@/views/Tesw")
+    },
+    {
+        // path: '/article/:id',
+        path: '/article/:itemId',
+        component: () => import("@/views/Article")
+        // component: article
     }
 ]
 
@@ -65,7 +81,7 @@ router.beforeEach((to, from, next) => {
     // console.log('from ', from)
     // console.log('next ', next)
     // if(to.path≡'/user')  进行路由判断
-    if ((!sessionStorage.getItem('userToken') || !sessionStorage.getItem('userId')) && to.meta.istoken == true) {
+    if ((!sessionStorage.getItem('userToken') || !sessionStorage.getItem('userId')) && to.meta.needToken == true) {
         app.config.globalProperties.$alert.fail("请重新登录")
         setTimeout(() => {
             router.push('/login')

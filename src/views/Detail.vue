@@ -1,6 +1,7 @@
 <template>
   <!--  <div >-->
-  <div class="detailitem" @click="this.$router.push('api/detail/'+detailitem.itemid)">
+  <!--  <div @click="$router.push('api/article/{$}')">-->
+  <div class="detailitem" @click="articleInfo(detailitem)">
     <div class="imageParent">
       <img :src="detailitem.image" style="width: 100%" v-if="detailitem.image">
       <img src="https://img0.baidu.com/it/u=2105137196,1697149427&fm=253&fmt=auto&app=138&f=JPEG?w=667&h=500"
@@ -14,6 +15,8 @@
   </div>
   <!--  </div>-->
 
+  <!--  </div>-->
+
 </template>
 
 <script>
@@ -21,7 +24,25 @@ export default {
   name: "Detail",
   props: [
     'detailitem'
-  ]
+  ],
+  methods: {
+    articleInfo(detailitem) {
+      console.log("debug", detailitem);
+      // this.$router.push('/register')
+      // this.$router.push('/article/'+detailitem.itemId)
+      console.log("$route",this.$route);
+      // console.log(typeof Number(this.$route.params.itemId));
+      // console.log(typeof detailitem.itemId);
+      // console.log(Number(this.$route.params.itemId) === detailitem.itemId)
+      // if (Number(this.$route.params.itemId) === detailitem.itemId) {
+        if (this.$route.path === '/article/' + detailitem.itemId) {
+        console.log("重复点击!")
+      } else {
+        this.$router.push('/article/' + detailitem.itemId)
+      }
+      // +detailitem.itemId
+    }
+  }
 }
 </script>
 
@@ -31,6 +52,10 @@ export default {
     font-size: 4vw;
     //padding: 0vw 0vw;
     padding-bottom: 4vw;
+    //  单行省略
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 }
 
