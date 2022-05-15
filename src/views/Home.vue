@@ -213,5 +213,8 @@ export default {
   --van-tabs-line-height:10vw;
   --van-tabs-card-height:8vw;
   --van-tabs-bottom-bar-width:10vw;
+  --van-search-label-font-size:10vw;
+  //--van-search-padding:4vw;
+  --van-search-action-font-size:4vw;
 }
 </style>

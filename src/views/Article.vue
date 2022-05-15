@@ -54,7 +54,8 @@
       ></detail>
       <!--      <tesw></tesw>-->
       <br>
-      <comment-title></comment-title>
+      <comment-title :commentCounts="this.commentCounts"></comment-title>
+      <comment @commentCount="len => commentCounts = len"></comment>
     </div>
   </div>
 </template>
@@ -62,12 +63,14 @@
 <script>
 import Navbar from "@/components/common/Navbar";
 import Detail from "@/views/Detail";
+import Comment from "@/components/article/Comment";
 import CommentTitle from "@/components/article/CommentTitle";
 export default {
   name: "Article",
   components: {
     Navbar,
     Detail,
+    Comment,
     CommentTitle,
   },
   data() {
@@ -78,10 +81,15 @@ export default {
       downloadCount: false,
       recommendArticleList: [],
       rs: [],
-      myUserInfo:null
+      myUserInfo:null,
+      commentCounts:null
     }
   },
   methods: {
+    getCounts(value){
+      this.commentCounts = value
+      console.log('value',value);
+    },
     async getArticleInfo() {
       console.log(this.$route.params);
       const res = await this.$myHttp.post('/api/getSingleArticleInfo', {
@@ -146,6 +154,7 @@ export default {
     // this.getRecommendArticleList()
     //  因为我们一直用的是一个组件,所以我们的方法是不会再次触发的,要么去watch路由,要么去为每一个封面写一个监听事件
     //  也就是说在同一个组件下的路由跳转,应该去监控路由
+    this.getCounts()
   },
   watch: {
     $route() {

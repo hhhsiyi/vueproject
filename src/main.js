@@ -13,15 +13,22 @@ import myHttp from "@/network/index2.js";
 // Vue.prototype.$myHttp = myHttp
 //--van-font-size-md
 //vue3之后原型挂载变了
+
+
+import moment from "moment"
+//用于对时间进行处理
+
 const app = createApp(App)
     .use(ElementPlus)
     .use(Vant)
     .use(router)
+    .use(moment)
     // .use(Toast)
 
 app.config.globalProperties.$myHttp = myHttp
 app.config.globalProperties.$alert = Toast
-
+app.config.globalProperties.$myDateMoment=moment
+// Vue.prototype.$moment = moment
 app.mount('#app')
 
 // export default
