@@ -1,7 +1,12 @@
 <template>
-  <div class="navbar">
+  <div class="navbar" @click="goToUserInfo()">
     <div class="logo">
-      <img src="@/assets/logo.png"/>
+      <van-icon
+          size="10vw"
+          name="home-o"
+          alt="返回主页"
+          @click="clickIndex()"/>
+      <!--      <img src="@/assets/logo.png" alt="返回主页" @click="clickIndex()"/>-->
     </div>
     <div>
       <p>
@@ -16,7 +21,8 @@
     </div>
     <div class="logo">
       <img src="@/assets/logo.png"/>
-      <p>还有话说221</p>
+      <p v-if="userInfo">{{userInfo.name}}</p>
+      <p v-else>他没名字</p>
     </div>
   </div>
 
@@ -35,9 +41,18 @@ export default {
       value: ''
     }
   },
+  props: ['userInfo'],
   methods: {
     onSearch() {
       console.log(this.value);
+    },
+    clickIndex() {
+      console.log("点击返回主页了");
+      this.$router.push('/')
+    },
+    goToUserInfo(){
+      // this.$router.push('/userInfo')
+      console.log('进入详情');
     }
   }
 }

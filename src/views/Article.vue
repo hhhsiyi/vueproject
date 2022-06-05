@@ -21,19 +21,19 @@
           <span>昨天</span>
         </div>
         <div class="zhuanpingzan">
-          <span :style={color:zanColor} @click="this.dianzan1=!this.dianzan1">
+          <span :style={color:zanColor} @click="good()">
 <!--            <van-icon name="thumb-circle-o" :color="zanColor" @click="this.dianzan1=!this.dianzan1"/>-->
             <!--            <span :style="{color:zanColor}">点赞</span>-->
             <van-icon name="thumb-circle-o"/>
             点赞
           </span>
-          <span :style="{color:shouColor}" @click="this.shoucang1=!this.shoucang1">
+          <span :style="{color:shouColor}" @click="collection()">
             <van-icon name="star-o"/>
             收藏数
           </span>
-          <span :style="{color:downloadColor}" @click="this.downloadCount=!this.downloadCount">
+          <span :style="{color:downloadColor}" @click="shared()">
             <van-icon name="down"/>
-            下载</span>
+            分享</span>
         </div>
       </div>
     </div>
@@ -54,8 +54,15 @@
       ></detail>
       <!--      <tesw></tesw>-->
       <br>
-      <comment-title :commentCounts="this.commentCounts"></comment-title>
-      <comment @commentCount="len => commentCounts = len"></comment>
+      <comment-title
+          :commentCounts="this.commentCounts"
+          @pushComment="pushComment"
+      ></comment-title>
+      <comment
+          @commentCount="len => commentCounts = len"
+          :loaded-comments="this.loadedComments"
+      ></comment>
+      <button @click="tt()">点击</button>
     </div>
   </div>
 </template>
@@ -65,6 +72,7 @@ import Navbar from "@/components/common/Navbar";
 import Detail from "@/views/Detail";
 import Comment from "@/components/article/Comment";
 import CommentTitle from "@/components/article/CommentTitle";
+
 export default {
   name: "Article",
   components: {
@@ -81,14 +89,81 @@ export default {
       downloadCount: false,
       recommendArticleList: [],
       rs: [],
-      myUserInfo:null,
-      commentCounts:null
+      myUserInfo: null,
+      commentCounts: null,
+      postComment: {
+        comment: '',
+        userId: '',
+        user: '',
+        //userName
+        parentId: null,
+        itemId: ''
+      },
+      loadedComments: true
     }
   },
   methods: {
-    getCounts(value){
+    good() {
+      this.dianzan1 = !this.dianzan1
+      console.log('sss', this.$route)
+      if (!sessionStorage.getItem('userToken') || !sessionStorage.getItem('userId')) {
+        setTimeout(() => {
+          this.$alert.fail("请登录")
+          // console.log('debug1:',this.$route);
+          // console.log('debug2:',this.$router);
+        }, 1000)
+        this.$router.push("/login")
+      } else {
+        let postParam = {
+          itemId: this.$route.params.itemId,
+          userId: sessionStorage.getItem('userId'),
+          userToken: sessionStorage.getItem('userToken')
+        }
+        this.$myHttp.post('/api/soundsGoodArticle', postParam).then((res) => {
+          console.log(res);
+        })
+      }
+    },
+    collection() {
+      this.shoucang1 = !this.shoucang1
+
+    },
+    shared() {
+      this.downloadCount = !this.downloadCount
+    },
+    tt() {
+      this.loadedComments = !this.loadedComments
+      setTimeout(() => this.loadedComments = !this.loadedComments, 1000)
+      // console.log(this.loadedComments);
+    },
+    pushComment(res) {
+      const date = new Date();
+      let m = date.getMonth() + 1
+      let d = date.getDate()
+      console.log(m, '月', d, '日');
+      this.postComment.comment = res
+      this.postComment.userId = sessionStorage.getItem("userId")
+      this.postComment.itemId = this.$route.params.itemId
+      this.$myHttp.post('/api/queryUserById', {id: sessionStorage.getItem("userId")}).then((res) => {
+        this.postComment.user = res.data.data.name
+      })
+      // console.log('评论', this.postComment);
+      this.$myHttp.post('/api/postCommentData', this.postComment).then(res => {
+        if (res.data.code !== 0) {
+          this.$alert.fail("失败", res.data.message)
+        } else {
+          console.log(res.data);
+          this.$alert.success("评论成功")
+          // this.reload
+          this.tt()
+          //  https://blog.csdn.net/m0_67401835/article/details/123304494
+          //  这么写台low了
+        }
+      })
+    },
+    getCounts(value) {
       this.commentCounts = value
-      console.log('value',value);
+      console.log('value', value);
     },
     async getArticleInfo() {
       console.log(this.$route.params);
@@ -107,7 +182,7 @@ export default {
     async getRecommendArticleList() {
       console.log('获取推荐视频列表');
       const res = await this.$myHttp.post('/api/getRecommendArticleList')
-      console.log("test", res.data.data);
+      // console.log("test", res.data.data);
       this.recommendArticleList = this.fillData(res.data.data)
       console.log(this.recommendArticleList);
       // this.recommendArticleList = res.data.data
@@ -119,7 +194,7 @@ export default {
     async getRecommendArticleList1() {
       console.log('获取推荐视频列表1');
       const res = await this.$myHttp.post('/api/getRecommendArticleList1')
-      console.log("test", res.data);
+      // console.log("test", res.data);
       // this.recommendArticleList = this.fillData(res.data)
       // console.log(this.recommendArticleList);
       // this.recommendArticleList = res.data.data

@@ -41,6 +41,7 @@
       <!--        </p>-->
       <!--      </div>-->
     </div>
+    {{loadedComments}}
   </div>
 </template>
 
@@ -49,15 +50,31 @@ import CommentChild from "@/components/article/CommentChild";
 
 export default {
   name: "Comment",
+  props: {
+    loadedComments: {
+      type:Boolean,
+      // default: false
+    }
+  },
   components: {
     CommentChild
+  },
+  watch: {
+    loadedComments(curVal, oldVal)
+    {
+      // console.log('传了新值嗷', curVal,oldVal);
+      console.log('123');
+      if (curVal) {
+        this.test22()
+      }
+    }
   },
   data() {
     return {
       comments: [],
       arr1: [],
       arr2: [],
-      test2: []
+      test2: [],
     }
   },
   methods: {
@@ -151,8 +168,9 @@ export default {
     },
     test() {
       this.$myHttp.post('/api/getCommentData', {
-        itemId: 999
+        itemId: this.$route.params.itemId
       }).then(res => {
+        console.log('111itemId:', this.$route.params.itemId.values());
         let arr = res.data
         const s = '何文大傻逼'
         let a = this.$myDateMoment
@@ -187,13 +205,16 @@ export default {
       })
     },
     async test22() {
+      this.test2=[]
+      this.arr=[]
+      this.arr2=[]
       const res = await this.$myHttp.post('/api/getCommentData', {
-        itemId: 999
+        itemId: this.$route.params.itemId
       });
       let arr = res.data
-      console.log('长度',arr);
-      if (res.data){
-        this.$emit('commentCount',arr.length)
+      console.log('长度', arr);
+      if (res.data) {
+        this.$emit('commentCount', arr.length)
       }
       const s = '何文大傻逼'
       let a = this.$myDateMoment
@@ -216,8 +237,8 @@ export default {
       }
 
       arr1 = test(null)
-      console.log("debug111 ", arr)
-      console.log("debug1112 ", arr1)
+      // console.log("debug111 ", arr)
+      // console.log("debug1112 ", arr1)
       this.test2 = arr1
     }
   },
@@ -280,7 +301,8 @@ export default {
       }
     }
   }
-  .secondComments{
+
+  .secondComments {
     padding: 4vw 0 2vw 15vw;
   }
 }

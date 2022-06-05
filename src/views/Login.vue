@@ -83,7 +83,8 @@ export default {
               sessionStorage.setItem('userId',res.data.data.id)
               sessionStorage.setItem('userToken',res.data.data.userToken)
               setTimeout(()=>{
-                this.$router.push('api/userinfo')
+                this.$router.go(-1)
+                // this.$router.push('api/home')
               },1000)
             } else {
               this.$alert.fail(res.data.message)
@@ -100,7 +101,13 @@ export default {
         this.registerUser.push(...res.data)
       })
       this.$alert.loading("在加载全部用户")
+    },
+    showRouter(){
+      console.log('登录页面的路由',this.$router);
     }
+  },
+  created() {
+    this.showRouter()
   }
 }
 </script>

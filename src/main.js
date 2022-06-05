@@ -9,6 +9,7 @@ import Vant from 'vant';
 import 'vant/lib/index.css';
 import {Toast} from "vant";
 import myHttp from "@/network/index2.js";
+import utils from "@/utils.js"
 //挂载到原型上,更好使
 // Vue.prototype.$myHttp = myHttp
 //--van-font-size-md
@@ -28,6 +29,7 @@ const app = createApp(App)
 app.config.globalProperties.$myHttp = myHttp
 app.config.globalProperties.$alert = Toast
 app.config.globalProperties.$myDateMoment=moment
+app.config.globalProperties.$utils = utils
 // Vue.prototype.$moment = moment
 app.mount('#app')
 

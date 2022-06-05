@@ -184,7 +184,7 @@ export default {
   //我是直接在retrun里面加个selectedID,然后监听activeKey() {  this.selectedId = this.category[this.activeKey]._id }
   created() {
     this.getCategory()
-    console.log(this.$route);
+    // console.log(this.$route);
   }
 }
 </script>
@@ -201,7 +201,8 @@ export default {
   }
 
 }
-:root{
+
+:root {
   //--van-font-size-xs: 4vw;
   //--van-font-size-sm: 4vw;
   //--van-font-size-md: 4vw;
@@ -210,11 +211,11 @@ export default {
   //--van-font-size-sm: 4vw;
   --van-font-size-md: 4vw;
   //--van-font-size-lg: 4vw;
-  --van-tabs-line-height:10vw;
-  --van-tabs-card-height:8vw;
-  --van-tabs-bottom-bar-width:10vw;
-  --van-search-label-font-size:10vw;
+  --van-tabs-line-height: 10vw;
+  --van-tabs-card-height: 8vw;
+  --van-tabs-bottom-bar-width: 10vw;
+  --van-search-label-font-size: 10vw;
   //--van-search-padding:4vw;
-  --van-search-action-font-size:4vw;
+  --van-search-action-font-size: 4vw;
 }
 </style>
